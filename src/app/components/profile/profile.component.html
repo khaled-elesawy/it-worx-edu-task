@@ -1,0 +1,70 @@
+<section class="profile">
+  <div class="row">
+    <div class="search-form col-xs-12 col-md-6">
+      <form #studentForm="ngForm" (ngSubmit)="onSubmit(studentForm)">
+        <div class="form-group has-search">
+          <label for="idInput">
+            kindly enter your id:
+            <span class="fa fa-search search-input-feedback"></span>
+            <input type="text" class="search-input" id="idInput" name="idInput" ngModel #idInput="ngModel" required>
+            <div class="alert alert-danger" *ngIf="idInput.touched && idInput.invalid">
+              <p *ngIf="idInput.errors.required">please enter a valid ID!</p>
+             </div>
+          </label>
+        </div>
+        <button type="submit" class="login-button btn btn-success" [disabled]="!studentForm.valid">login</button>
+      </form>
+    </div>
+    <div class="profile-info col-xs-12 col-md-4">
+      <div *ngIf="requiredStudent">
+        <h3 class="col-xs-12"><span>your personal data:</span></h3>
+        <p>name: {{ requiredStudent.Name }}</p>
+        <p>email: {{ requiredStudent.Email }}</p>
+        <p>phone: {{requiredStudent.Phone}}</p>
+        <p>address: {{ requiredStudent.Address }}</p>
+        <p>register data: {{ requiredStudent.RegisterDate |date }}</p>
+        <hr>
+      </div>
+
+      <div *ngIf="requestedCourses.length > 0">
+        <h3 class="col-xs-12" *ngIf="requestedCourses"><span>your courses:</span></h3>
+        <div class="requested-courses" *ngFor="let course of requestedCourses">
+            <div class="course-card">
+              <div>
+                <img class="course-img" [src]="course.CourseImg" alt="">
+              </div>
+              <div class="course-content">
+                <div class="course-name">
+                  <p>{{ course.CourseName }}</p>
+                </div>
+                <div class="course-details">
+                  <div class="level-n-duration">
+                    <p>
+                      <span class="course-level">{{ course.courseLevel }}</span>
+                    </p>
+                    <span class="course-duration">duration: {{ course.CourseDuration }}H</span>
+                  </div>
+                  <div class="seats-prices">
+                    <p>
+                      <span class="course-n-seats">
+                        <i class="high-seats fa fa-users fa-x" aria-hidden="true" *ngIf="course.AvailableSeats > 5"></i>
+                        <i class="low-seats fa fa-users fa-x" aria-hidden="true" *ngIf="course.AvailableSeats <= 5"></i>
+                        {{ course.AvailableSeats }}
+                      </span>
+                    </p>
+                    <span class="course-price">{{ course.CoursePrice |currency}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <hr>
+        </div>
+      </div>
+
+      <div *ngIf="totalCost">
+        <h3><span>total courses price is: </span></h3>
+        <p>{{ totalCost |currency}}</p>
+      </div>
+    </div>
+  </div>
+</section>

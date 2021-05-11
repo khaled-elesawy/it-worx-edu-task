@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Gotham-Book";
+  src: local("Gotham-Book"), url("./assets/fonts/GothamBook.ttf") format("truetype");
+}
+html, body {
+  background-color: #121212;
+  font-family: Gotham-Book;
+  font-style: normal;
+  text-transform: capitalize;
+
+}
+
+

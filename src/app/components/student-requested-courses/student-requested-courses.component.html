@@ -1,0 +1,49 @@
+<section class="requests">
+  <div class="custom-container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-1"></div>
+
+      <div class="middle-section col-xs-12 col-sm-10">
+        <div class="row">
+          <div class="requests-heading  col-xs-6">
+            <h3><span>student requested courses</span></h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-lg-3 request" *ngFor="let course of studentRequestedCourses; let i = index">
+
+              <div class="course-card">
+                <div>
+                  <img class="course-img" [src]="course.CourseImg" alt="">
+                </div>
+                <div class="course-content">
+                  <div class="course-name">
+                    <p>{{ course.CourseName }}</p>
+                  </div>
+                  <div class="course-details">
+                    <div class="level-n-duration">
+                      <p>
+                        <span class="course-level">{{ course.courseLevel }}</span>
+                      </p>
+                      <span class="course-duration">duration: {{ course.CourseDuration }}H</span>
+                    </div>
+                    <div class="seats-prices">
+                      <p>
+                        <span class="course-n-seats">
+                          <i class="high-seats fa fa-users fa-x" aria-hidden="true" *ngIf="course.AvailableSeats > 5"></i>
+                          <i class="low-seats fa fa-users fa-x" aria-hidden="true" *ngIf="course.AvailableSeats <= 5"></i>
+                          {{ course.AvailableSeats }}
+                        </span>
+                      </p>
+                      <span class="course-price">{{ course.CoursePrice |currency}}</span>
+                    </div>
+
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

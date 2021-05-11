@@ -1,0 +1,191 @@
+<section class="courses">
+  <div class="custom-container">
+    <div class="row">
+
+      <div class="left-section col-xs-12 col-sm-3 col-md-4 col-lg-3">
+        <p>filter by: </p>
+        <ul class="list">
+          <p class="filter-name">course duration</p>
+          <li class="list-item" *ngFor="let filter of durationFilters">
+            <input type="checkbox" [id]="filter.title" class="hidden-box" (change)="onFilter($event, filter)">
+            <label [for]="filter.title" class="check--label">
+              <span class="check--label-text"><span class="check--label-box"></span>
+                {{ filter.title }}
+              </span>
+            </label>
+          </li>
+        </ul>
+        <hr>
+        <ul class="list">
+          <p class="filter-name">all category</p>
+          <li class="list-item" *ngFor="let filter of categoryFilters">
+            <input type="checkbox" [id]="filter.title" class="hidden-box" (change)="onFilter($event, filter)">
+            <label [for]="filter.title" class="check--label">
+              <span class="check--label-text"><span class="check--label-box"></span>
+                {{ filter.title }}
+              </span>
+            </label>
+          </li>
+        </ul>
+        <hr>
+        <ul class="list">
+          <p class="filter-name">the difficulty level of the course</p>
+          <li class="list-item" *ngFor="let filter of difficultyFilters">
+            <input type="checkbox" [id]="filter.title" class="hidden-box" (change)="onFilter($event, filter)">
+            <label [for]="filter.title" class="check--label">
+              <span class="check--label-text"><span class="check--label-box"></span>
+                {{ filter.title }}
+              </span>
+            </label>
+          </li>
+        </ul>
+      </div>
+
+      <div class="middle-section col-xs-12 col-sm-6 col-md-4 col-lg-6">
+        <div class="">
+          <div class="course-name-search row">
+            <div class="col-xs-12 col-sm-12 col-lg-5 col-xl-4">
+              <h3 class="all-courses">
+                <span>all courses</span>
+              </h3>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-lg-2 col-xl-3"></div>
+            <div class="col-xs-12 col-sm-12 col-lg-5 col-xl-5">
+              <div class="form-group has-search">
+                <span class="fa fa-search search-input-feedback"></span>
+                <input type="text" class="search-input" [(ngModel)]="filteredCourseName" value="Search" placeholder="Search by course name">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="course col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4"
+            *ngFor="let course of filteredCourses | courseNameFilter :filteredCourseName :'CourseName'">
+            <div class="course-card">
+              <div>
+                <img class="course-img" [src]="course.CourseImg" alt="">
+              </div>
+              <div class="course-content">
+                <div class="course-name">
+                  <p>{{ course.CourseName }}</p>
+                </div>
+                <div class="course-details">
+                  <div class="level-n-duration">
+                    <p>
+                      <span class="course-level">{{ course.courseLevel }}</span>
+                    </p>
+                    <span class="course-duration">duration: {{ course.CourseDuration }}H</span>
+                  </div>
+                  <div class="seats-prices">
+                    <p>
+                      <span class="course-n-seats">
+                        <i class="high-seats fa fa-users fa-x" aria-hidden="true" *ngIf="course.AvailableSeats > 5"></i>
+                        <i class="low-seats fa fa-users fa-x" aria-hidden="true" *ngIf="course.AvailableSeats <= 5"></i>
+                        {{ course.AvailableSeats }}
+                      </span>
+                    </p>
+                    <span class="course-price">{{ course.CoursePrice |currency}}</span>
+                  </div>
+                  <div class="add-button">
+                    <div class="add-button">
+                      <button type="button" class="btn btn-light" (click)="onAddCourse(course)">
+                        add to cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-section col-xs-12 col-sm-3 col-md-4 col-lg-3">
+        <div class="todo-list">
+          <p>todo list</p>
+          <div id="carouselExampleControls" data-interval="0" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <pagination [directionLinks]="false" [rotate]="true" [totalItems]="70" [(ngModel)]="currentPage" (numPages)="smallnumPages = $event"></pagination>
+              </div>
+              <div class="carousel-item">
+                <pagination [directionLinks]="false" [rotate]="true" [totalItems]="70" [(ngModel)]="currentPageSecond" (numPages)="smallnumPages = $event"></pagination>
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <pre *ngIf="!currentPageSecond" class="card card-block card-header mb-3">day no: {{currentPage}} in this week</pre>
+          <pre *ngIf="currentPageSecond" class="card card-block card-header mb-3">day no: {{currentPageSecond}} in this week</pre>
+          <ul class="list">
+            <li class="list-item">
+              <input type="checkbox" class="hidden-box" id="first" checked />
+              <label for="first" class="check--label">
+                <span>9 am</span>
+                <span class="check--label-text"><span class="check--label-box"></span>
+                  Respond to Course1 Survey<br>
+                  Due date in 28/1/2010
+                </span>
+              </label>
+            </li>
+            <hr>
+            <li class="list-item">
+              <input type="checkbox" class="hidden-box" id="second" checked />
+              <label for="second" class="check--label">
+                <span>12 pm</span>
+                <span class="check--label-text"><span class="check--label-box"></span>
+                  Assessment Title in Course2 <br>
+                  Due date in 28/1/2010
+                </span>
+              </label>
+            </li>
+            <hr>
+            <li class="list-item">
+              <input type="checkbox" class="hidden-box" id="third" />
+              <label for="third" class="check--label">
+                <span>4 pm </span>
+                <span class="check--label-text"><span class="check--label-box"></span>
+                  Take Eff. Level 2 Assessment <br>
+                  Due date in 28/1/2010
+                </span>
+              </label>
+            </li>
+            <hr>
+            <li class="list-item">
+              <input type="checkbox" class="hidden-box" id="fourth" />
+              <label for="fourth" class="check--label">
+                <span>7 pm</span>
+                <span class="check--label-text"><span class="check--label-box"></span>
+                  Respond to Course1 Survey<br>
+                  Due date in 28/1/2010
+                </span>
+              </label>
+            </li>
+          </ul>
+
+        </div>
+        <div class="recent-updates">
+          <p>recent updates</p>
+          <div class="post" *ngFor="let update of recentUpdates">
+            <div>
+              <img [src]="update.imgPath" alt="">
+            </div>
+            <div class="post-time">
+              <p>{{ update.userPosts |shorten}}</p>
+              <p>{{ update.time }}</p>
+              <hr>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</section>
